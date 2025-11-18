@@ -178,7 +178,7 @@ export default function HazardForm() {
         </tbody>
       </table>
 
-      {/* PPE */}
+        {/* PPE */}
       <h3 style={{ marginTop: 20, marginBottom: 10 }}>PPE Required</h3>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 20 }}>
         {PPE_OPTIONS.map(p => (
@@ -263,7 +263,87 @@ export default function HazardForm() {
       />
 
       {/* Signatures */}
-      ... (the signatures block we already finished with Worker, Client + Contact, Supervisor + Contact)
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 20 }}>
+        {/* Worker Signature */}
+        <div style={{ flex: 1, marginRight: 10 }}>
+          <div style={{ marginBottom: 6, fontWeight: "bold" }}>Worker Signature</div>
+          <SignatureCanvas
+            ref={workerSigRef}
+            penColor="black"
+            canvasProps={{
+              width: 300,
+              height: 100,
+              className: "sigCanvas",
+              style: { border: "1px solid #000" }
+            }}
+          />
+          <div style={{ marginTop: 6 }}>
+            <button type="button" onClick={() => workerSigRef.current && workerSigRef.current.clear()}>
+              Clear
+            </button>
+          </div>
+        </div>
+
+        {/* Client Signature + Contact */}
+        <div style={{ flex: 1, marginRight: 10 }}>
+          <div style={{ marginBottom: 6, fontWeight: "bold" }}>Client Signature</div>
+          <SignatureCanvas
+            ref={clientSigRef}
+            penColor="black"
+            canvasProps={{
+              width: 300,
+              height: 100,
+              className: "sigCanvas",
+              style: { border: "1px solid #000" }
+            }}
+          />
+          <div style={{ marginTop: 6 }}>
+            <button type="button" onClick={() => clientSigRef.current && clientSigRef.current.clear()}>
+              Clear
+            </button>
+          </div>
+          <div style={{ marginTop: 10 }}>
+            <label style={{ fontWeight: "bold" }}>Client Contact #:</label>
+            <input
+              type="text"
+              name="clientContactNumber"
+              value={formData.clientContactNumber}
+              onChange={handleChange}
+              style={{ width: "100%" }}
+            />
+          </div>
+        </div>
+
+        {/* Supervisor Signature + Contact */}
+        <div style={{ flex: 1 }}>
+          <div style={{ marginBottom: 6, fontWeight: "bold" }}>Supervisor Signature</div>
+          <SignatureCanvas
+            ref={supervisorSigRef}
+            penColor="black"
+            canvasProps={{
+              width: 300,
+              height: 100,
+              className: "sigCanvas",
+              style: { border: "1px solid #000" }
+            }}
+          />
+          <div style={{ marginTop: 6 }}>
+            <button type="button" onClick={() => supervisorSigRef.current && supervisorSigRef.current.clear()}>
+              Clear
+            </button>
+          </div>
+          <div style={{ marginTop: 10 }}>
+            <label style={{ fontWeight: "bold" }}>Supervisor Contact #:</label>
+            <input
+              type="text"
+              name="supervisorContactNumber"
+              value={formData.supervisorContactNumber}
+              onChange={handleChange}
+              style={{ width: "100%" }}
+            />
+          </div>
+        </div>
+      </div>
 
       {/* Submit */}
       <div style={{ textAlign: "center", marginTop: 20 }}>
@@ -272,7 +352,6 @@ export default function HazardForm() {
         </button>
         <div style={{ marginTop: 10 }}>{status}</div>
       </div>
-
-    </form>
+        </form>
   );
 }
