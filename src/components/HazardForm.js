@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import SignatureCanvas from 'react-signature-canvas';
+import { submitForm, checkHealth } from "../api";
 
 const HAZARD_CONTROLS = {
   "Auto Starting Equipment": ["Auto Start Signage", "Guards", "SWP-009 Lockout/Tag Out", "PPE"],
