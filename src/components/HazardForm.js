@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
-import axios from 'axios';
-import SignatureCanvas from 'react-signature-canvas';
-import { submitForm, checkHealth } from "../api";
+// src/components/HazardForm.js
+import React, { useState, useRef } from "react";
+import axios from "axios";
+import SignatureCanvas from "react-signature-canvas";
 
 const HAZARD_CONTROLS = {
   "Auto Starting Equipment": ["Auto Start Signage", "Guards", "SWP-009 Lockout/Tag Out", "PPE"],
@@ -33,22 +33,22 @@ const HAZARD_CONTROLS = {
 };
 
 const PPE_OPTIONS = [
-  'Safety Glasses/Goggles','Gloves','Hard Hat','Respiratory Protection',
-  'Fire Retardant Coveralls','Double Hearing Protection','Safety Boots','Gas Monitor','Face Shield'
+  "Safety Glasses/Goggles","Gloves","Hard Hat","Respiratory Protection",
+  "Fire Retardant Coveralls","Double Hearing Protection","Safety Boots","Gas Monitor","Face Shield"
 ];
 
 export default function HazardForm() {
   const [formData, setFormData] = useState({
-    company: '', jobDescription: '', location: '', date: '',
+    company: "", jobDescription: "", location: "", date: "",
     hazards: [], hazardControls: {}, ppe: [],
-    additionalHazards: '', additionalControls: '', tailgateMeeting: '',
-    representatives: Array(6).fill(''),
-    representativeEmergencyContact: '',
-    clientEmergencyContact: '',
-    workerSignature: '', clientName: '', clientSignature: '',
-    supervisorName: '', supervisorSignature: ''
+    additionalHazards: "", additionalControls: "", tailgateMeeting: "",
+    representatives: Array(6).fill(""),
+    representativeEmergencyContact: "",
+    clientEmergencyContact: "",
+    workerSignature: "", clientName: "", clientSignature: "",
+    supervisorName: "", supervisorSignature: ""
   });
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState("");
 
   const workerSigRef = useRef(null);
   const clientSigRef = useRef(null);
@@ -80,43 +80,49 @@ export default function HazardForm() {
 
   const handleSubmit = async e => {
     e.preventDefault();
+
     const workerSignature = workerSigRef.current && !workerSigRef.current.isEmpty()
-      ? workerSigRef.current.getTrimmedCanvas().toDataURL('image/png') : '';
+      ? workerSigRef.current.getTrimmedCanvas().toDataURL("image/png") : "";
     const clientSignature = clientSigRef.current && !clientSigRef.current.isEmpty()
-      ? clientSigRef.current.getTrimmedCanvas().toDataURL('image/png') : '';
+      ? clientSigRef.current.getTrimmedCanvas().toDataURL("image/png") : "";
     const supervisorSignature = supervisorSigRef.current && !supervisorSigRef.current.isEmpty()
-      ? supervisorSigRef.current.getTrimmedCanvas().toDataURL('image/png') : '';
+      ? supervisorSigRef.current.getTrimmedCanvas().toDataURL("image/png") : "";
+
     const payload = { ...formData, workerSignature, clientSignature, supervisorSignature };
-    setStatus('Submitting...');
+    setStatus("Submitting...");
+
     try {
-      const res = await axios.post('http://192.168.1.75:5000/submit-form', payload);
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/submit-form`,
+        payload
+      );
       setStatus(`Submitted ✔ Form #: ${res.data.formNumber}`);
     } catch (err) {
-      console.error(err);
-      setStatus('Submission failed.');
+      console.error("❌ Error submitting form:", err);
+      setStatus("Submission failed.");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ fontFamily: 'sans-serif', maxWidth: 1000, margin: '0 auto' }}>
-      <h2 style={{ textAlign: 'center', marginBottom: 20 }}>SITE SPECIFIC HAZARD ASSESSMENT</h2>
+    <form onSubmit={handleSubmit} style={{ fontFamily: "sans-serif", maxWidth: 1000, margin: "0 auto" }}>
+      <h2 style={{ textAlign: "center", marginBottom: 20 }}>SITE SPECIFIC HAZARD ASSESSMENT</h2>
 
       {/* Job Info */}
-      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 20 }}>
+      <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 20 }}>
         <tbody>
-          <tr style={{ backgroundColor: '#f2f2f2' }}>
-            <td style={{ border: '1px solid #000', padding: 8, fontWeight: 'bold' }}>
+          <tr style={{ backgroundColor: "#f2f2f2" }}>
+            <td style={{ border: "1px solid #000", padding: 8, fontWeight: "bold" }}>
               Company/Client: <input name="company" value={formData.company} onChange={handleChange} />
             </td>
-            <td style={{ border: '1px solid #000', padding: 8, fontWeight: 'bold' }}>
+            <td style={{ border: "1px solid #000", padding: 8, fontWeight: "bold" }}>
               Job Description: <input name="jobDescription" value={formData.jobDescription} onChange={handleChange} />
             </td>
           </tr>
           <tr>
-            <td style={{ border: '1px solid #000', padding: 8, fontWeight: 'bold' }}>
+            <td style={{ border: "1px solid #000", padding: 8, fontWeight: "bold" }}>
               Location/L.S.D.: <input name="location" value={formData.location} onChange={handleChange} />
             </td>
-            <td style={{ border: '1px solid #000', padding: 8, fontWeight: 'bold' }}>
+            <td style={{ border: "1px solid #000", padding: 8, fontWeight: "bold" }}>
               Date: <input type="date" name="date" value={formData.date} onChange={handleChange} />
             </td>
           </tr>
@@ -125,28 +131,28 @@ export default function HazardForm() {
 
       {/* Hazards + Controls */}
       <h3 style={{ marginTop: 20, marginBottom: 10 }}>Hazards and Controls</h3>
-      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 20 }}>
-        <thead style={{ backgroundColor: '#d9d9d9' }}>
+      <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 20 }}>
+        <thead style={{ backgroundColor: "#d9d9d9" }}>
           <tr>
-            <th style={{ border: '1px solid #000', padding: 6, fontWeight: 'bold' }}>Hazard</th>
-            <th style={{ border: '1px solid #000', padding: 6, fontWeight: 'bold' }}>Controls</th>
+            <th style={{ border: "1px solid #000", padding: 6, fontWeight: "bold" }}>Hazard</th>
+            <th style={{ border: "1px solid #000", padding: 6, fontWeight: "bold" }}>Controls</th>
           </tr>
         </thead>
         <tbody>
           {Object.entries(HAZARD_CONTROLS).map(([hazard, controls], idx) => (
-            <tr key={hazard} style={{ backgroundColor: idx % 2 === 0 ? '#f9f9f9' : '#ffffff' }}>
-              <td style={{ border: '1px solid #000', padding: 6 }}>
+            <tr key={hazard} style={{ backgroundColor: idx % 2 === 0 ? "#f9f9f9" : "#ffffff" }}>
+              <td style={{ border: "1px solid #000", padding: 6 }}>
                 <label>
                   <input
                     type="checkbox"
                     checked={formData.hazards.includes(hazard)}
-                    onChange={() => toggleArrayValue('hazards', hazard)}
+                    onChange={() => toggleArrayValue("hazards", hazard)}
                   /> {hazard}
                 </label>
               </td>
-              <td style={{ border: '1px solid #000', padding: 6 }}>
+              <td style={{ border: "1px solid #000", padding: 6 }}>
                 {controls.map(c => (
-                  <label key={c} style={{ marginRight: 12 }}>
+                  <label key={c} style={{ marginRight: 12, display: "inline-block", marginBottom: 6 }}>
                     <input
                       type="checkbox"
                       disabled={!formData.hazards.includes(hazard)}
@@ -163,13 +169,13 @@ export default function HazardForm() {
 
       {/* PPE */}
       <h3 style={{ marginTop: 20, marginBottom: 10 }}>PPE Required</h3>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 20 }}>
         {PPE_OPTIONS.map(p => (
           <label key={p}>
             <input
               type="checkbox"
               checked={formData.ppe.includes(p)}
-              onChange={() => toggleArrayValue('ppe', p)}
+              onChange={() => toggleArrayValue("ppe", p)}
             /> {p}
           </label>
         ))}
@@ -177,30 +183,30 @@ export default function HazardForm() {
 
       {/* Additional Hazards/Controls */}
       <h3 style={{ marginTop: 20, marginBottom: 10 }}>Additional Hazards and Controls</h3>
-      <input name="additionalHazards" value={formData.additionalHazards} onChange={handleChange} placeholder="Additional Hazards" style={{ width: '100%', marginBottom: 8 }} />
-      <input name="additionalControls" value={formData.additionalControls} onChange={handleChange} placeholder="Additional Controls" style={{ width: '100%', marginBottom: 20 }} />
+      <input name="additionalHazards" value={formData.additionalHazards} onChange={handleChange} placeholder="Additional Hazards" style={{ width: "100%", marginBottom: 8 }} />
+      <input name="additionalControls" value={formData.additionalControls} onChange={handleChange} placeholder="Additional Controls" style={{ width: "100%", marginBottom: 20 }} />
 
       {/* Tailgate Meeting */}
       <h3 style={{ marginTop: 20, marginBottom: 10 }}>Tailgate / Safety Meeting</h3>
-      <textarea name="tailgateMeeting" value={formData.tailgateMeeting} onChange={handleChange} style={{ width: '100%', height: 100, marginBottom: 20 }} />
+      <textarea name="tailgateMeeting" value={formData.tailgateMeeting} onChange={handleChange} style={{ width: "100%", height: 100, marginBottom: 20 }} />
 
-            {/* Representatives */}
+      {/* Representatives */}
       <h3 style={{ marginTop: 20, marginBottom: 10 }}>PowerServ Representatives</h3>
-      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 12 }}>
-        <thead style={{ backgroundColor: '#d9d9d9' }}>
+      <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 12 }}>
+        <thead style={{ backgroundColor: "#d9d9d9" }}>
           <tr>
-            <th style={{ border: '1px solid #000', padding: 6, fontWeight: 'bold' }}>Name (Please Print)</th>
+            <th style={{ border: "1px solid #000", padding: 6, fontWeight: "bold" }}>Name (Please Print)</th>
           </tr>
         </thead>
         <tbody>
           {formData.representatives.map((rep, idx) => (
-            <tr key={idx} style={{ backgroundColor: idx % 2 === 0 ? '#f9f9f9' : '#ffffff' }}>
-              <td style={{ border: '1px solid #000', padding: 6 }}>
+            <tr key={idx} style={{ backgroundColor: idx % 2 === 0 ? "#f9f9f9" : "#ffffff" }}>
+              <td style={{ border: "1px solid #000", padding: 6 }}>
                 <input
                   value={rep}
                   onChange={(e) => handleRepChange(idx, e.target.value)}
                   placeholder={`Representative ${idx + 1}`}
-                  style={{ width: '100%' }}
+                  style={{ width: "100%" }}
                 />
               </td>
             </tr>
@@ -215,72 +221,41 @@ export default function HazardForm() {
         value={formData.representativeEmergencyContact}
         onChange={handleChange}
         placeholder="Enter Representative Emergency Contact Number"
-        style={{ width: '100%', marginBottom: 20 }}
+        style={{ width: "100%", marginBottom: 20 }}
       />
 
-      {/* One signature pad for all reps */}
-      <h4>Representative Signature</h4>
-      <SignatureCanvas
-        ref={workerSigRef}
-        penColor="black"
-        canvasProps={{
-          width: 400,
-          height: 150,
-          className: 'sigCanvas',
-          style: { border: '1px solid #000', marginBottom: 20 }
-        }}
-      />
+      {/* Signatures */}
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 20 }}>
+        <div style={{ flex: 1, marginRight: 10 }}>
+          <div style={{ marginBottom: 6, fontWeight: "bold" }}>Worker Signature</div>
+          <SignatureCanvas ref={workerSigRef} penColor="black" canvasProps={{ width: 300, height: 100, className: "sigCanvas", style: { border: "1px solid #000" } }} />
+          <div style={{ marginTop: 6 }}>
+            <button type="button" onClick={() => workerSigRef.current && workerSigRef.current.clear()}>Clear</button>
+          </div>
+        </div>
 
-      {/* Client Signature */}
-      <h3 style={{ marginTop: 20, marginBottom: 10 }}>Client Signature</h3>
-      <input
-        name="clientName"
-        value={formData.clientName}
-        onChange={handleChange}
-        placeholder="Client Name"
-        style={{ width: '100%', marginBottom: 8 }}
-      />
-      <h4>Client Emergency Contact #</h4>
-      <input
-        name="clientEmergencyContact"
-        value={formData.clientEmergencyContact}
-        onChange={handleChange}
-        placeholder="Enter Client Emergency Contact Number"
-        style={{ width: '100%', marginBottom: 20 }}
-      />
-      <SignatureCanvas
-        ref={clientSigRef}
-        penColor="black"
-        canvasProps={{
-          width: 400,
-          height: 150,
-          className: 'sigCanvas',
-          style: { border: '1px solid #000', marginBottom: 20 }
-        }}
-      />
+        <div style={{ flex: 1, marginRight: 10 }}>
+          <div style={{ marginBottom: 6, fontWeight: "bold" }}>Client Signature</div>
+          <SignatureCanvas ref={clientSigRef} penColor="black" canvasProps={{ width: 300, height: 100, className: "sigCanvas", style: { border: "1px solid #000" } }} />
+          <div style={{ marginTop: 6 }}>
+            <button type="button" onClick={() => clientSigRef.current && clientSigRef.current.clear()}>Clear</button>
+          </div>
+        </div>
 
-      {/* Supervisor Signature */}
-      <h3 style={{ marginTop: 20, marginBottom: 10 }}>Supervisor Signature</h3>
-      <input
-        name="supervisorName"
-        value={formData.supervisorName}
-        onChange={handleChange}
-        placeholder="Supervisor Name"
-        style={{ width: '100%', marginBottom: 8 }}
-      />
-      <SignatureCanvas
-        ref={supervisorSigRef}
-        penColor="black"
-        canvasProps={{
-          width: 400,
-          height: 150,
-          className: 'sigCanvas',
-          style: { border: '1px solid #000', marginBottom: 20 }
-        }}
-      />
+        <div style={{ flex: 1 }}>
+          <div style={{ marginBottom: 6, fontWeight: "bold" }}>Supervisor Signature</div>
+          <SignatureCanvas ref={supervisorSigRef} penColor="black" canvasProps={{ width: 300, height: 100, className: "sigCanvas", style: { border: "1px solid #000" } }} />
+          <div style={{ marginTop: 6 }}>
+            <button type="button" onClick={() => supervisorSigRef.current && supervisorSigRef.current.clear()}>Clear</button>
+          </div>
+        </div>
+      </div>
 
-      <button type="submit" style={{ marginTop: 10, fontWeight: 'bold' }}>Submit Hazard Form</button>
-      <div style={{ marginTop: 8 }}>{status}</div>
+      {/* Submit */}
+      <div style={{ textAlign: "center", marginTop: 20 }}>
+        <button type="submit" style={{ padding: "8px 16px", fontSize: 16 }}>Submit Hazard Form</button>
+        <div style={{ marginTop: 10 }}>{status}</div>
+      </div>
     </form>
   );
 }
