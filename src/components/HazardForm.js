@@ -34,8 +34,8 @@ const HAZARD_CONTROLS = {
 };
 
 const PPE_OPTIONS = [
-  "Safety Glasses/Goggles","Gloves","Hard Hat","Respiratory Protection",
-  "Fire Retardant Coveralls","Double Hearing Protection","Safety Boots","Gas Monitor","Face Shield"
+  "Safety Glasses/Goggles", "Gloves", "Hard Hat", "Respiratory Protection",
+  "Fire Retardant Coveralls", "Double Hearing Protection", "Safety Boots", "Gas Monitor", "Face Shield"
 ];
 
 export default function HazardForm() {
@@ -47,8 +47,10 @@ export default function HazardForm() {
     representativeCompany: "", representativeEmergencyContact: "",
     clientEmergencyContact: "",
     workerSignature: "", clientSignature: "", supervisorSignature: "",
-    clientContactNumber: "", supervisorName: "", supervisorContactNumber: ""
+    clientContactName: "", clientContactNumber: "",
+    supervisorName: "", supervisorContactName: "", supervisorContactNumber: ""
   });
+
   const [status, setStatus] = useState("");
 
   const workerSigRef = useRef(null);
@@ -296,17 +298,22 @@ export default function HazardForm() {
           <SignatureCanvas
             ref={clientSigRef}
             penColor="black"
-            canvasProps={{
-              width: 300,
-              height: 100,
-              className: "sigCanvas",
-              style: { border: "1px solid #000" }
-            }}
+            canvasProps={{ width: 300, height: 100, style: { border: "1px solid #000" } }}
           />
           <div style={{ marginTop: 6 }}>
             <button type="button" onClick={() => clientSigRef.current && clientSigRef.current.clear()}>
               Clear
             </button>
+          </div>
+          <div style={{ marginTop: 10 }}>
+            <label style={{ fontWeight: "bold" }}>Client Contact Name:</label>
+            <input
+              type="text"
+              name="clientContactName"
+              value={formData.clientContactName}
+              onChange={handleChange}
+              style={{ width: "100%" }}
+            />
           </div>
           <div style={{ marginTop: 10 }}>
             <label style={{ fontWeight: "bold" }}>Client Contact #:</label>
@@ -326,17 +333,22 @@ export default function HazardForm() {
           <SignatureCanvas
             ref={supervisorSigRef}
             penColor="black"
-            canvasProps={{
-              width: 300,
-              height: 100,
-              className: "sigCanvas",
-              style: { border: "1px solid #000" }
-            }}
+            canvasProps={{ width: 300, height: 100, style: { border: "1px solid #000" } }}
           />
           <div style={{ marginTop: 6 }}>
             <button type="button" onClick={() => supervisorSigRef.current && supervisorSigRef.current.clear()}>
               Clear
             </button>
+          </div>
+          <div style={{ marginTop: 10 }}>
+            <label style={{ fontWeight: "bold" }}>Supervisor Contact Name:</label>
+            <input
+              type="text"
+              name="supervisorContactName"
+              value={formData.supervisorContactName}
+              onChange={handleChange}
+              style={{ width: "100%" }}
+            />
           </div>
           <div style={{ marginTop: 10 }}>
             <label style={{ fontWeight: "bold" }}>Supervisor Contact #:</label>
