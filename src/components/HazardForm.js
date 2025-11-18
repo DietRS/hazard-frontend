@@ -5,13 +5,32 @@ import SignatureCanvas from "react-signature-canvas";
 
 const HAZARD_CONTROLS = {
   "Auto Starting Equipment": ["Auto Start Signage", "Guards", "SWP-009 Lockout/Tag Out", "PPE"],
-  "Driving": ["Adhere to Posted Speed Limits", "Road Conditions", "Defensive Driving"],
-  "Extreme Heat": ["Hydration", "Rest Breaks", "Protective Clothing"],
-  "Hazardous Materials": ["MSDS", "Proper Storage", "PPE"],
+  "Biohazards": ["SWP-002 Chemical & Biological Hazards", "MSDS", "PPE"],
+  "Compressed Gases": ["SWP-020 Compressed Gas Cylinders", "MSDS", "Isolation"],
+  "Driving": ["Adhere to Posted Speed Limits/Signage", "Road Conditions", "Defensive Driving"],
+  "Electrical": ["SWP-009 Lockout/Tag Out", "Grounding & Bonding", "PPE"],
+  "Explosive/Flammable Gas": ["Gas Monitor", "Ventilation", "Ignition Control", "SWP - Gas Detection", "PPE - Fire Retardant/Gas Monitor"],
+  "Extreme Heat": ["SWP-019 Working in Extreme Heat", "Hydration", "Rest Breaks", "Protective Clothing"],
+  "Flying Debris/Dust": ["Safety Glasses/Goggles", "Face Shield", "Dust Mask/Respirator", "Guards"],
+  "Fuelling Equipment": ["No Smoking", "Spill Kit", "Fire Extinguisher", "Grounding & Bonding", "MSDS", "PPE - Chemical Resistant Gloves"],
+  "Hazardous Materials": ["SWP-003 WHMIS", "MSDS", "Proper Storage", "PPE"],
+  "Hot Fluids": ["Insulated Gloves", "Face Shield", "SWP-009 Lockout/Tag Out", "MSDS", "PPE"],
   "Housekeeping/Inspections": ["Daily Inspection", "Clean Work Area", "Remove Trip Hazards"],
-  "Pinch Points/Crushing": ["Guards", "SWP-009 Lockout/Tag Out", "Awareness Training"],
-  "Weather": ["Weather Monitoring", "Protective Clothing", "Work Suspension if Unsafe"],
-  // ... add other hazards as needed
+  "Ignition Source": ["Hot Work Permit", "Fire Watch", "Fire Extinguisher", "Equipment Isolation", "Positive Air Shutoff", "Grounding"],
+  "Illumination": ["Adequate Lighting for the Job", "Portable Lights", "Flashlights"],
+  "Inhalation Vapour (Varsol, Brakleen)": ["SWP-003 WHMIS", "Respiratory Protection", "Ventilation", "MSDS", "1/2 Mask Respirator w/ Organic Cartridge"],
+  "Manual Lifting": ["SWP-010 Manual Lifting", "Buddy System", "Proper Technique", "PPE"],
+  "Mechanical Lifting - Cranes/Hoisting": ["SWP-014 Cranes, Hoists, Lifting Devices", "Certified Equipment", "Spotter", "Pre Inspection", "Equipment Certification", "Use According to Manufacturer Specs", "Tag Lines where needed"],
+  "Noise Levels": ["SWP-012 Noise", "Hearing Protection", "Double Hearing Protection", "Noise Monitoring", "PPE"],
+  "Open Flame": ["Hot Work Permit", "Fire Watch", "Fire Extinguisher", "SWP-018 Gas Detection", "PPE"],
+  "Pinch Points/Crushing": ["Guards", "SWP-009 Lockout/Tag Out", "Awareness Training", "PPE"],
+  "Radioactive Sources - NORMS": ["Signage", "Awareness Training", "PPE"],
+  "Rigging/Ropes/Slings/Cable": ["SWP-015 Rigging", "Certified Slings", "Inspection Before Use", "Equipment Inspection", "PPE"],
+  "Rotating Equipment": ["Guards", "SWP-009 Lockout/Tag Out", "Safeguards", "No Loose Clothing", "PPE"],
+  "Slips/Trips/Falls": ["Housekeeping", "Slip Resistant Boots", "Fall Protection", "Awareness", "PPE"],
+  "Weather": ["Weather Monitoring", "Protective Clothing", "Work Suspension if Unsafe", "SWP-016 Working Alone", "Emergency Response Planning", "PPE"],
+  "Wildlife": ["Awareness Training", "Bear Spray", "Avoidance Procedures"],
+  "Working Alone": ["Check-In Procedure", "Communication Device", "Emergency Plan", "SWP-016 Working Alone", "Site Specific Procedures"]
 };
 
 const PPE_OPTIONS = [
