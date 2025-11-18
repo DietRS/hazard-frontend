@@ -262,6 +262,14 @@ export default function HazardForm() {
         style={{ width: "100%", marginBottom: 20 }}
       />
 
+      {/* Acknowledgement */}
+      <h3 style={{ marginTop: 20, marginBottom: 10 }}>Acknowledgement</h3>
+      <p style={{ marginBottom: 20 }}>
+        I acknowledge that I have participated in the hazard assessment and understand the hazards,
+        controls, and PPE requirements for this job. I agree to follow all safety procedures and
+        use the required protective equipment.
+      </p>
+
       {/* Signatures */}
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 20 }}>
         {/* Worker Signature */}
