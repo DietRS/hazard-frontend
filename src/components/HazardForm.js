@@ -141,6 +141,8 @@ export default function HazardForm() {
 
       {/* Hazards + Controls */}
       {/* ... keep existing hazards and PPE sections ... */}
+<h3 style={{ marginTop: 20, marginBottom: 10 }}>Hazards and Controls</h3>
+...
 
       {/* Representatives */}
       <h3 style={{ marginTop: 20, marginBottom: 10 }}>PowerServ Representatives</h3>
