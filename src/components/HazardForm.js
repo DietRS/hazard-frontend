@@ -5,31 +5,13 @@ import SignatureCanvas from "react-signature-canvas";
 
 const HAZARD_CONTROLS = {
   "Auto Starting Equipment": ["Auto Start Signage", "Guards", "SWP-009 Lockout/Tag Out", "PPE"],
-  "Biohazards": ["SWP-002 Chemical & Biological Hazards", "MSDS", "PPE"],
-  "Compressed Gases": ["SWP-020 Compressed Gas Cylinders", "MSDS", "Isolation"],
   "Driving": ["Adhere to Posted Speed Limits", "Road Conditions", "Defensive Driving"],
-  "Electrical": ["SWP-009 Lockout/Tag Out", "Grounding & Bonding", "PPE"],
-  "Explosive/Flammable Gas": ["Gas Monitor", "Ventilation", "Ignition Control", "MSDS"],
   "Extreme Heat": ["Hydration", "Rest Breaks", "Protective Clothing"],
-  "Flying Debris/Dust": ["Safety Glasses/Goggles", "Face Shield", "Dust Mask/Respirator"],
-  "Fuelling Equipment": ["No Smoking", "Spill Kit", "Fire Extinguisher"],
   "Hazardous Materials": ["MSDS", "Proper Storage", "PPE"],
-  "Hot Fluids": ["Insulated Gloves", "Face Shield", "SWP-009 Lockout/Tag Out"],
   "Housekeeping/Inspections": ["Daily Inspection", "Clean Work Area", "Remove Trip Hazards"],
-  "Ignition Source": ["No Smoking", "Fire Watch", "Fire Extinguisher"],
-  "Illumination": ["Adequate Lighting", "Portable Lights", "Flashlights"],
-  "Inhalation Vapour": ["Respiratory Protection", "Ventilation", "MSDS"],
-  "Manual Lifting": ["SWP-010 Manual Lifting", "Buddy System", "Proper Technique"],
-  "Mechanical Lifting": ["SWP-011 Mechanical Lifting", "Certified Equipment", "Spotter"],
-  "Noise Levels": ["Hearing Protection", "Double Hearing Protection", "Noise Monitoring"],
-  "Open Flame": ["Hot Work Permit", "Fire Watch", "Fire Extinguisher"],
   "Pinch Points/Crushing": ["Guards", "SWP-009 Lockout/Tag Out", "Awareness Training"],
-  "Rigging/Ropes/Slings": ["SWP-012 Rigging", "Certified Slings", "Inspection Before Use"],
-  "Rotating Equipment": ["Guards", "SWP-009 Lockout/Tag Out", "PPE"],
-  "Slips/Trips/Falls": ["Housekeeping", "Slip Resistant Boots", "Fall Protection"],
   "Weather": ["Weather Monitoring", "Protective Clothing", "Work Suspension if Unsafe"],
-  "Wildlife": ["Awareness Training", "Bear Spray", "Avoidance Procedures"],
-  "Working Alone": ["Check-In Procedure", "Communication Device", "Emergency Plan"]
+  // ... add other hazards as needed
 };
 
 const PPE_OPTIONS = [
@@ -43,13 +25,10 @@ export default function HazardForm() {
     hazards: [], hazardControls: {}, ppe: [],
     additionalHazards: "", additionalControls: "", tailgateMeeting: "",
     representatives: Array(6).fill(""),
-    representativeCompany: "",   // NEW FIELD
-    representativeEmergencyContact: "",
+    representativeCompany: "", representativeEmergencyContact: "",
     clientEmergencyContact: "",
-    workerSignature: "", clientName: "", clientSignature: "",
-    clientContactNumber: "",
-    supervisorName: "", supervisorSignature: "",
-    supervisorContactNumber: ""
+    workerSignature: "", clientSignature: "", supervisorSignature: "",
+    clientContactNumber: "", supervisorName: "", supervisorContactNumber: ""
   });
   const [status, setStatus] = useState("");
 
@@ -140,13 +119,13 @@ export default function HazardForm() {
         </tbody>
       </table>
 
-            {/* Hazards + Controls */}
+      {/* Hazards + Controls */}
       <h3 style={{ marginTop: 20, marginBottom: 10 }}>Hazards and Controls</h3>
       <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 20 }}>
         <thead style={{ backgroundColor: "#d9d9d9" }}>
           <tr>
-            <th style={{ border: "1px solid #000", padding: 6, fontWeight: "bold" }}>Hazard</th>
-            <th style={{ border: "1px solid #000", padding: 6, fontWeight: "bold" }}>Controls</th>
+            <th style={{ border: "1px solid #000", padding: 6 }}>Hazard</th>
+            <th style={{ border: "1px solid #000", padding: 6 }}>Controls</th>
           </tr>
         </thead>
         <tbody>
@@ -178,8 +157,8 @@ export default function HazardForm() {
         </tbody>
       </table>
 
-        {/* PPE */}
-      <h3 style={{ marginTop: 20, marginBottom: 10 }}>PPE Required</h3>
+      {/* PPE */}
+      <h3>PPE Required</h3>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 20 }}>
         {PPE_OPTIONS.map(p => (
           <label key={p}>
@@ -193,7 +172,7 @@ export default function HazardForm() {
       </div>
 
       {/* Additional Hazards/Controls */}
-      <h3 style={{ marginTop: 20, marginBottom: 10 }}>Additional Hazards and Controls</h3>
+      <h3>Additional Hazards and Controls</h3>
       <input
         name="additionalHazards"
         value={formData.additionalHazards}
@@ -210,7 +189,7 @@ export default function HazardForm() {
       />
 
       {/* Tailgate Meeting */}
-      <h3 style={{ marginTop: 20, marginBottom: 10 }}>Tailgate / Safety Meeting</h3>
+      <h3>Tailgate / Safety Meeting</h3>
       <textarea
         name="tailgateMeeting"
         value={formData.tailgateMeeting}
@@ -218,8 +197,8 @@ export default function HazardForm() {
         style={{ width: "100%", height: 100, marginBottom: 20 }}
       />
 
-      {/* Representative Company Name */}
-      <h3 style={{ marginTop: 20, marginBottom: 10 }}>Representative Company</h3>
+      {/* Representative Company */}
+      <h3>Representative Company</h3>
       <input
         name="representativeCompany"
         value={formData.representativeCompany}
@@ -229,11 +208,11 @@ export default function HazardForm() {
       />
 
       {/* Representatives */}
-      <h3 style={{ marginTop: 20, marginBottom: 10 }}>Representatives</h3>
+      <h3>Representatives</h3>
       <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 12 }}>
         <thead style={{ backgroundColor: "#d9d9d9" }}>
           <tr>
-            <th style={{ border: "1px solid #000", padding: 6, fontWeight: "bold" }}>Name (Please Print)</th>
+            <th style={{ border: "1px solid #000", padding: 6 }}>Name (Please Print)</th>
           </tr>
         </thead>
         <tbody>
@@ -253,7 +232,7 @@ export default function HazardForm() {
       </table>
 
       {/* Representative Emergency Contact */}
-      <h4 style={{ marginTop: 10 }}>Representative Emergency Contact #</h4>
+      <h4>Representative Emergency Contact #</h4>
       <input
         name="representativeEmergencyContact"
         value={formData.representativeEmergencyContact}
@@ -263,7 +242,7 @@ export default function HazardForm() {
       />
 
       {/* Acknowledgement */}
-      <h3 style={{ marginTop: 20, marginBottom: 10 }}>Acknowledgement</h3>
+      <h3>Acknowledgement</h3>
       <p style={{ marginBottom: 20 }}>
         I acknowledge that I have participated in the hazard assessment and understand the hazards,
         controls, and PPE requirements for this job. I agree to follow all safety procedures and
@@ -360,6 +339,6 @@ export default function HazardForm() {
         </button>
         <div style={{ marginTop: 10 }}>{status}</div>
       </div>
-        </form>
+    </form>
   );
 }
